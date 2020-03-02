@@ -1,0 +1,8 @@
+@import "~bulma/sass/utilities/initial-variables.sass";
+@import "~bulma/sass/utilities/functions.sass";
+
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@latest/nanumbarungothicsubset.css");
+
+$family-primary: "NanumBarunGothic", "Helvetica", sans-serif !important;
+
+@import "~bulma/bulma.sass";
