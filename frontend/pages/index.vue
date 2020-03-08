@@ -32,7 +32,7 @@
             <div v-if="this.$store.state.user">
               <h1 style="margin-bottom: 1rem;">
                 SPARCSSSO로 로그인 되었습니다. (현재 사용자:
-                {{ this.$store.state.user.nameKor }})
+                {{ this.$store.state.user.name }})
               </h1>
               <button
                 class="button is-light"
@@ -77,7 +77,7 @@ export default {
         });
     },
     logout() {
-      this.$store.commit('user', null);
+      this.$store.dispatch('logout');
     }
   }
 };

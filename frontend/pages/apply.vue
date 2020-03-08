@@ -3,11 +3,36 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered is-vcentered">
-          <form class="column is-half" @submit.prevent="submitForm">
-            <h2 class="subtitle is-4">지원서 작성</h2>
+          <form ref="form" class="column is-half" @submit.prevent="submitForm">
+            <h2 v-if="!submitted" class="subtitle is-4">지원서 작성</h2>
+            <template v-else>
+              <h2 class="subtitle is-4">지원서 확인 및 수정</h2>
+              <div class="form-item">
+                지원서가 성공적으로 제출되었습니다.
+                <br />
+                지원서 접수 기간이 끝날 때까지는 자유롭게 수정하실 수 있습니다.
+              </div>
+            </template>
             <hr />
 
             <h3 class="subtitle is-5">지원자 정보</h3>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">이름</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input
+                    class="input"
+                    name="name"
+                    type="text"
+                    :value="name"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
 
             <div class="field is-horizontal">
               <div class="field-label is-normal">
@@ -181,8 +206,23 @@
             </div>
 
             <button class="button is-primary" type="submit">
-              제출
+              <template v-if="submitted">
+                업데이트
+              </template>
+              <template v-else>
+                제출
+              </template>
             </button>
+
+            <transition name="fade">
+              <span
+                v-if="sending"
+                class="status"
+                :class="{ 'is-failed': failed }"
+              >
+                {{ status }}
+              </span>
+            </transition>
           </form>
         </div>
       </div>
@@ -192,6 +232,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      status: '',
+      failed: false,
+      sending: false,
+      submitted: false
+    };
+  },
+
   computed: {
     name() {
       return this.$store.state.user.name;
@@ -206,10 +255,48 @@ export default {
     }
   },
 
+  async mounted() {
+    const res = await this.$axios.$get('/apply', {
+      headers: {
+        Authorization: this.$store.state.user.token
+      },
+
+      params: {
+        stdNo: this.stdNo,
+        email: this.email
+      }
+    });
+
+    if (!res.result) return;
+
+    this.submitted = true;
+    Object.keys(res.payload).forEach((name) => {
+      const value = res.payload[name];
+
+      const elem = this.$refs.form.querySelector(`[name="${name}"]`);
+      if (!elem) return;
+
+      if (elem.getAttribute('type') === 'radio') {
+        const matchingElem = this.$refs.form.querySelector(
+          `[name="${name}"][value="${value}"]`
+        );
+
+        if (matchingElem) matchingElem.checked = true;
+        return;
+      }
+
+      elem.value = value;
+    });
+  },
+
   middleware: 'authenticated',
 
   methods: {
-    submitForm(event) {
+    async submitForm(event) {
+      if (this.sending) return;
+      this.sending = true;
+      this.failed = false;
+
       const formElements = event.target.elements;
       const formData = new FormData(event.target);
       const jsonData = Object.create(null);
@@ -224,7 +311,34 @@ export default {
         }
       }
 
-      console.log(jsonData);
+      this.status = '제출 중...';
+
+      let result;
+      if (!this.submitted) {
+        result = await this.$axios.$post('/apply', jsonData, {
+          headers: {
+            Authorization: this.$store.state.user.token
+          }
+        });
+      } else {
+        result = await this.$axios.$put('/apply', jsonData, {
+          headers: {
+            Authorization: this.$store.state.user.token
+          }
+        });
+      }
+
+      if (!result.result) {
+        this.status = `제출 실패! (${result.message})`;
+        this.failed = true;
+        return;
+      }
+
+      this.status = '제출 완료';
+      this.submitted = true;
+      setTimeout(() => {
+        this.sending = false;
+      }, 3000);
     }
   }
 };
@@ -314,6 +428,24 @@ input[readonly]:focus {
 
 .button.is-primary:hover {
   background: #2196f3;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.status {
+  color: #2979ff;
+}
+
+.status.is-failed {
+  color: #f44336;
 }
 
 ::selection {

@@ -16,26 +16,28 @@
 
 <script>
 export default {
-  async asyncData(context) {
-    const { code, state } = context.query;
+  data() {
+    return {
+      code: ''
+    };
+  },
 
-    if (process.server) {
-      const res = await context.app.$axios.$post('auth/login/callback', {
-        code,
-        state
-      });
-      console.log('callback check', res);
+  async mounted() {
+    const { code, state } = this.$route.query;
 
-      if (!res.result) {
-        context.redirect('/login/error');
-      } else {
-        console.log('callback check true', res.payload.token);
-        context.res.setHeader('Set-Cookie', [`PHPSESSID=${res.payload.token}`]);
-        context.redirect('/apply');
-      }
+    const res = await this.$axios.$post('auth/login/callback', {
+      code,
+      state
+    });
+
+    if (!res.result) {
+      this.$router.replace('/login/error');
+    } else {
+      this.$store.dispatch('login', res.payload);
+      this.$router.replace('/apply');
     }
 
-    return { code, state };
+    this.code = code;
   }
 };
 </script>

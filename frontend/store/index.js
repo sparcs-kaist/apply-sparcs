@@ -13,17 +13,29 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit({ commit }, { req, $axios }) {
     if (!(req && req.headers && req.headers.cookie)) return;
-
     const cookies = cookie.parse(req.headers.cookie);
+
     if (!cookies.PHPSESSID) return;
 
-    console.log('auth check');
     const { result, payload } = await $axios.$get('/auth/check', {
       headers: {
         Authorization: cookies.PHPSESSID
       }
     });
 
-    if (result) commit('setUser', payload.user);
+    if (result) {
+      payload.token = cookies.PHPSESSID;
+      commit('setUser', payload);
+    }
+  },
+
+  login({ commit }, payload) {
+    document.cookie = `PHPSESSID=${payload.token}; path=/`;
+    commit('setUser', payload);
+  },
+
+  logout({ commit }, payload) {
+    document.cookie = `PHPSESSID=; path=/`;
+    commit('setUser', null);
   }
 };

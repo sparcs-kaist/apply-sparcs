@@ -52,9 +52,9 @@ const loginCallback = async (ctx: any): Promise<void> => {
     {
       isStateValid: true,
       token,
-      ku_kname: kaistInfo.ku_kname,
-      ku_std_no: kaistInfo.ku_std_no,
-      mail: kaistInfo.mail,
+      name: kaistInfo.ku_kname,
+      stdNo: kaistInfo.ku_std_no,
+      email: kaistInfo.mail,
     },
     '',
     200,
