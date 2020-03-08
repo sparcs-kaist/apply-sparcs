@@ -97,15 +97,14 @@ const newApply = async (ctx: any): Promise<void> => {
 };
 
 const getApply = async (ctx: any): Promise<void> => {
-  const data = ctx.request.body;
-  const { stdNo, email } = data;
+  const { stdNo, email } = ctx.request.query;
 
   // Validate input
   const joiObject = joi.object({
     email: joi.string().required(),
     stdNo: joi.number().required(),
   });
-  const joiValidateResult = joiObject.validate(data);
+  const joiValidateResult = joiObject.validate({ stdNo, email });
   if (joiValidateResult.error) {
     console.error(`Validation error: ${joiValidateResult.error.message}`);
     return ctxReturn(ctx, false, null, 'bad request', 400);
