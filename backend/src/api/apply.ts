@@ -3,6 +3,7 @@ import * as joi from '@hapi/joi';
 import ctxReturn from '../utils/ctx.return';
 import ApplyForm from '../db/models/ApplyForm';
 import { stateEncryptor, stateValidator } from 'src/utils/state.utils';
+import checkAuthenticated from '../middlewares/middleware.authenticate';
 
 const apply: Router = new Router();
 
@@ -121,6 +122,7 @@ const getApply = async (ctx: any): Promise<void> => {
   return ctxReturn(ctx, true, applyForm, '', 200);
 };
 
+apply.use(checkAuthenticated);
 apply.post('/', newApply);
 apply.get('/', getApply);
 

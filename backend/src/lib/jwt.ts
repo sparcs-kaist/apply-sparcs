@@ -9,7 +9,11 @@ const generateJWT = (payload: object, subject: string): any => {
 };
 
 const validateJWT = (token: string): any => {
+  try {
   return jwt.verify(token, process.env.JWT_SECRET_KEY);
+  } catch {
+    return null;
+  }
 };
 
 export { generateJWT, validateJWT };

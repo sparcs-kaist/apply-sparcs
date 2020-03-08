@@ -1,7 +1,8 @@
 import * as Router from 'koa-router';
 import SSOClient from '../utils/sso';
 import { stateEncryptor, stateValidator } from '../utils/state.utils';
-import ctxReturn from 'src/utils/ctx.return';
+import ctxReturn from '../utils/ctx.return';
+import { generateJWT, validateJWT } from '../lib/jwt';
 
 const auth: Router = new Router();
 
@@ -40,11 +41,17 @@ const loginCallback = async (ctx: any): Promise<void> => {
     overwrite: true,
   });
 
+  const token = await generateJWT(
+    { email: kaistInfo.mail, stdNo: kaistInfo.ku_std_no },
+    'user',
+  );
+
   return ctxReturn(
     ctx,
     true,
     {
       isStateValid: true,
+      token,
       ku_kname: kaistInfo.ku_kname,
       ku_std_no: kaistInfo.ku_std_no,
       mail: kaistInfo.mail,
@@ -54,9 +61,22 @@ const loginCallback = async (ctx: any): Promise<void> => {
   );
 };
 
+const checkToken = async (ctx: any): Promise<void> => {
+  const token = ctx.get('Authorization');
+  const res = validateJWT(token || '');
+  console.log(`JWT checking... ${token}, ${JSON.stringify(res)}`);
+
+  if (res == null) {
+    ctxReturn(ctx, false, null, 'jwt malformed', 400);
+  } else {
+    ctxReturn(ctx, true, res, '', 200);
+  }
+};
+
 // auth.get('/', checkAuth);
 auth.post('/login', login);
 auth.post('/login/callback', loginCallback);
+auth.get('/check', checkToken);
 // auth.get('/logout', logout);
 
 export default auth;
