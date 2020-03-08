@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered is-vcentered">
-          <div class="column is-half">
+          <form class="column is-half" @submit.prevent="submitForm">
             <h2 class="subtitle is-4">지원서 작성</h2>
             <hr />
 
@@ -15,7 +15,13 @@
               </div>
               <div class="field-body">
                 <div class="field">
-                  <input class="input" type="text" :value="name" disabled />
+                  <input
+                    class="input"
+                    name="name"
+                    type="text"
+                    :value="name"
+                    readonly
+                  />
                 </div>
               </div>
             </div>
@@ -26,7 +32,30 @@
               </div>
               <div class="field-body">
                 <div class="field">
-                  <input class="input" type="text" :value="numb" disabled />
+                  <input
+                    class="input"
+                    name="stdNo"
+                    type="text"
+                    :value="stdNo"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">이메일</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input
+                    class="input"
+                    name="email"
+                    type="text"
+                    :value="email"
+                    readonly
+                  />
                 </div>
               </div>
             </div>
@@ -39,6 +68,7 @@
                 <div class="field">
                   <input
                     class="input"
+                    name="dept"
                     type="text"
                     placeholder="학과를 입력해주세요"
                   />
@@ -56,6 +86,7 @@
               </p>
               <input
                 class="input"
+                name="phone"
                 type="tel"
                 placeholder="전화번호를 입력해주세요."
               />
@@ -67,11 +98,11 @@
               </p>
               <div class="control">
                 <label class="radio">
-                  <input type="radio" name="type" value="developer" />
+                  <input type="radio" name="applyType" value="developer" />
                   개발자
                 </label>
                 <label class="radio">
-                  <input type="radio" name="type" value="designer" />
+                  <input type="radio" name="applyType" value="designer" />
                   디자이너
                 </label>
               </div>
@@ -84,7 +115,11 @@
                 자기소개를 작성해주세요.
               </p>
               <div class="control">
-                <textarea class="textarea" name="introduce" placeholder="여기에 입력해주세요">
+                <textarea
+                  class="textarea"
+                  name="introduction"
+                  placeholder="여기에 입력해주세요"
+                >
                 </textarea>
               </div>
             </div>
@@ -94,7 +129,11 @@
                 SPARCS에 들어온다면 어떤 일을 하고 싶으신가요?
               </p>
               <div class="control">
-                <textarea class="textarea" name="workToDo" placeholder="여기에 입력해주세요">
+                <textarea
+                  class="textarea"
+                  name="workToDo"
+                  placeholder="여기에 입력해주세요"
+                >
                 </textarea>
               </div>
             </div>
@@ -105,7 +144,11 @@
                 자유롭게 작성해주세요.
               </p>
               <div class="control">
-                <textarea class="textarea" name="motivation" placeholder="여기에 입력해주세요">
+                <textarea
+                  class="textarea"
+                  name="motivation"
+                  placeholder="여기에 입력해주세요"
+                >
                 </textarea>
               </div>
             </div>
@@ -135,11 +178,11 @@
               </p>
               <div class="control">
                 <label class="radio">
-                  <input type="radio" name="activeForFour" value="developer" />
+                  <input type="radio" name="activeForFour" value="true" />
                   네, 활동할 수 있습니다.
                 </label>
                 <label class="radio">
-                  <input type="radio" name="activeForFour" value="designer" />
+                  <input type="radio" name="activeForFour" value="false" />
                   아니오, 활동할 수 없습니다.
                 </label>
               </div>
@@ -154,10 +197,10 @@
               예정입니다.
             </div>
 
-            <a class="button is-light" href="https://sparcs.org">
-              Back to SPARCS.org
-            </a>
-          </div>
+            <button class="button is-primary" type="submit">
+              제출
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -166,11 +209,40 @@
 
 <script>
 export default {
-  data() {
-    return {
-      name: '테스트',
-      numb: '20190000'
-    };
+  computed: {
+    name() {
+      return this.$store.state.user.name;
+    },
+
+    stdNo() {
+      return this.$store.state.user.stdNo;
+    },
+
+    email() {
+      return this.$store.state.user.email;
+    }
+  },
+
+  middleware: 'authenticated',
+
+  methods: {
+    submitForm(event) {
+      const formElements = event.target.elements;
+      const formData = new FormData(event.target);
+      const jsonData = Object.create(null);
+      for (const [key, value] of formData.entries()) {
+        if (
+          formElements[key] instanceof RadioNodeList &&
+          (value === 'true' || value === 'false')
+        ) {
+          jsonData[key] = value === 'true';
+        } else {
+          jsonData[key] = value;
+        }
+      }
+
+      console.log(jsonData);
+    }
   }
 };
 </script>
@@ -186,6 +258,7 @@ export default {
 
 .apply,
 input,
+button,
 textarea {
   font-family: 'NanumBarunRoboto', sans-serif;
 }
@@ -238,12 +311,26 @@ input[type='tel']:focus {
   border-color: #2979ff;
 }
 
-input[disabled] {
+input[readonly] {
+  cursor: not-allowed;
   background: #dadada;
 }
 
-input[disabled]:hover {
+input[readonly]:hover {
   background: #dadada;
+}
+
+input[readonly]:focus {
+  border-color: transparent;
+}
+
+.button.is-primary {
+  background: #2979ff;
+  transition: background 0.4s ease;
+}
+
+.button.is-primary:hover {
+  background: #2196f3;
 }
 
 ::selection {

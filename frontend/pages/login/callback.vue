@@ -20,27 +20,15 @@ export default {
     const { code, state } = context.query;
 
     if (process.server) {
-      const res = await context.app.$axios
-        .$post('auth/login/callback', {
-          code,
-          state
-        })
-        .then((data) => {
-          if (data.result) {
-            return true;
-          } else {
-            return false;
-          }
-        });
+      const res = await context.app.$axios.$post('auth/login/callback', {
+        code,
+        state
+      });
 
-      if (!res) {
+      if (!res.result) {
         context.redirect('/login/error');
       } else {
-        context.store.commit('setUser', {
-          code,
-          korName: '테스트'
-        });
-
+        context.res.setHeader('Set-Cookie', [`SESSID=${res.payload.token}`]);
         context.redirect('/apply');
       }
     }
