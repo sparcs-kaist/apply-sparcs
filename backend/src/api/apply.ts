@@ -2,7 +2,6 @@ import * as Router from 'koa-router';
 import * as joi from '@hapi/joi';
 import ctxReturn from '../utils/ctx.return';
 import ApplyForm from '../db/models/ApplyForm';
-import { stateEncryptor, stateValidator } from 'src/utils/state.utils';
 import checkAuthenticated from '../middlewares/middleware.authenticate';
 
 const apply: Router = new Router();
@@ -51,8 +50,6 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation: joi.string(),
     meetup: joi.boolean().required(),
     activeForFour: joi.boolean().required(),
-
-    password: joi.string().required(),
   });
   const joiValidateResult = joiObject.validate(data);
   if (joiValidateResult.error) {
@@ -60,7 +57,11 @@ const newApply = async (ctx: any): Promise<void> => {
     return ctxReturn(ctx, false, null, 'bad request', 400);
   }
 
-  const hashedPassword = await stateEncryptor(password);
+  // Check is same user
+  if (ctx.state.user.email !== email || ctx.state.user.stdNo !== stdNo.toString()) {
+    console.error(`User not match. ${JSON.stringify(ctx.state.user)}, ${email}, ${stdNo}`);
+    return ctxReturn(ctx, false, null, 'bad request', 400);
+  }
 
   // Creating new apply form
   const applyFormDocument = new ApplyForm({
@@ -75,7 +76,6 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation,
     meetup,
     activeForFour,
-    password: hashedPassword,
   });
 
   const applyFormId = await ApplyForm.create(applyFormDocument)
@@ -93,13 +93,12 @@ const newApply = async (ctx: any): Promise<void> => {
 
 const getApply = async (ctx: any): Promise<void> => {
   const data = ctx.request.body;
-  const { stdNo, email, password } = data;
+  const { stdNo, email } = data;
 
   // Validate input
   const joiObject = joi.object({
     email: joi.string().required(),
     stdNo: joi.number().required(),
-    password: joi.string().required(),
   });
   const joiValidateResult = joiObject.validate(data);
   if (joiValidateResult.error) {
@@ -107,18 +106,17 @@ const getApply = async (ctx: any): Promise<void> => {
     return ctxReturn(ctx, false, null, 'bad request', 400);
   }
 
+  // Check is same user
+  if (ctx.state.user.email !== email || ctx.state.user.stdNo !== stdNo.toString()) {
+    console.error(`User not match. ${JSON.stringify(ctx.state.user)}, ${email}, ${stdNo}`);
+    return ctxReturn(ctx, false, null, 'bad request', 400);
+  }
+
   let applyForm = await ApplyForm.findOne({ email, stdNo });
   if (!applyForm) {
     return ctxReturn(ctx, false, null, 'not found', 404);
   }
-  
-  const isOwner = await stateValidator(applyForm.password, password);
-  if (!isOwner) {
-    console.error(`Invalid password: ${email}, ${stdNo}`);
-    return ctxReturn(ctx, false, null, 'bad request', 400);
-  }
 
-  applyForm.password = undefined;
   return ctxReturn(ctx, true, applyForm, '', 200);
 };
 
