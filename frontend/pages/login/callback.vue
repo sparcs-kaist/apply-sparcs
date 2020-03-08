@@ -41,7 +41,7 @@ export default {
           korName: '테스트'
         });
 
-        context.redirect('/login/success');
+        context.redirect('/apply');
       }
     }
 
