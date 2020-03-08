@@ -42,7 +42,7 @@ const loginCallback = async (ctx: any): Promise<void> => {
   });
 
   const token = await generateJWT(
-    { email: kaistInfo.mail, stdNo: kaistInfo.ku_std_no },
+    { email: kaistInfo.mail, stdNo: kaistInfo.ku_std_no, name: kaistInfo.ku_kname },
     'user',
   );
 

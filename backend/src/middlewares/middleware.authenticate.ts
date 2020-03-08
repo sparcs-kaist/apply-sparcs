@@ -27,6 +27,7 @@ const checkAuthenticated = async (
     ctx.state.user = {
       email: jwtValidateResult.email,
       stdNo: jwtValidateResult.stdNo,
+      name: jwtValidateResult.name,
     };
     ctx.state.token = token;
     return next();
