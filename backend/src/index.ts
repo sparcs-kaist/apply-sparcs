@@ -3,6 +3,7 @@ import * as bodyparser from 'koa-bodyparser';
 import * as cors from '@koa/cors';
 
 import './lib/env';
+import './lib/mongo';
 
 import api from './api';
 
