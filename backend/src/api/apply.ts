@@ -20,7 +20,6 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation,
     meetup,
     activeForFour,
-    password,
   } = data;
 
   console.log(
@@ -66,6 +65,12 @@ const newApply = async (ctx: any): Promise<void> => {
       `User not match. ${JSON.stringify(ctx.state.user)}, ${email}, ${stdNo}`,
     );
     return ctxReturn(ctx, false, null, 'bad request', 400);
+  }
+
+  // Check duplicatedForm
+  let checkDuplicate = await ApplyForm.findOne({ email, stdNo });
+  if (checkDuplicate) {
+    return ctxReturn(ctx, false, null, 'already exists', 409);
   }
 
   // Creating new apply form
