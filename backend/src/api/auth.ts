@@ -22,17 +22,36 @@ const login = async (ctx: any): Promise<void> => {
 
 const loginCallback = async (ctx: any): Promise<void> => {
   const encryptedState = ctx.cookies.get('SESSID') || 'err_empty_state';
-  const { state } = ctx.request.body;
+  const { code, state } = ctx.request.body;
 
-  const isStateValid = await stateValidator(encryptedState, state) || false;
+  const isStateValid = (await stateValidator(encryptedState, state)) || false;
   console.log(`state validation: ${state}, ${encryptedState}, ${isStateValid}`);
+
+  if (!isStateValid) {
+    return ctxReturn(ctx, false, null, '', 401);
+  }
+
+  // Get user information from SSO
+  const sparcsInfo = await SSOClient.getUserInfo(code);
+  const kaistInfo = JSON.parse(sparcsInfo.kaist_info);
 
   ctx.cookies.set('SESSID', '', {
     maxAge: 1000 * 60 * 10,
     overwrite: true,
   });
 
-  return ctxReturn(ctx, isStateValid, null, '', 200);
+  return ctxReturn(
+    ctx,
+    true,
+    {
+      isStateValid: true,
+      ku_kname: kaistInfo.ku_kname,
+      ku_std_no: kaistInfo.ku_std_no,
+      mail: kaistInfo.mail,
+    },
+    '',
+    200,
+  );
 };
 
 // auth.get('/', checkAuth);
