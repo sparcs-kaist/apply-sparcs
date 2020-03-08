@@ -24,11 +24,13 @@ export default {
         code,
         state
       });
+      console.log('callback check', res);
 
       if (!res.result) {
         context.redirect('/login/error');
       } else {
-        context.res.setHeader('Set-Cookie', [`SESSID=${res.payload.token}`]);
+        console.log('callback check true', res.payload.token);
+        context.res.setHeader('Set-Cookie', [`PHPSESSID=${res.payload.token}`]);
         context.redirect('/apply');
       }
     }

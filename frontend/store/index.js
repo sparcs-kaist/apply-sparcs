@@ -15,11 +15,12 @@ export const actions = {
     if (!(req && req.headers && req.headers.cookie)) return;
 
     const cookies = cookie.parse(req.headers.cookie);
-    if (!cookies.SESSID) return;
+    if (!cookies.PHPSESSID) return;
 
-    const { result, payload } = await $axios.$get('/auth/me', {
+    console.log('auth check');
+    const { result, payload } = await $axios.$get('/auth/check', {
       headers: {
-        Authorization: cookies.SESSID
+        Authorization: cookies.PHPSESSID
       }
     });
 
