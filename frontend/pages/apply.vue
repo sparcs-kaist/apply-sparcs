@@ -11,23 +11,6 @@
 
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">이름</label>
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <input
-                    class="input"
-                    name="name"
-                    type="text"
-                    :value="name"
-                    readonly
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="field is-horizontal">
-              <div class="field-label is-normal">
                 <label class="label">학번</label>
               </div>
               <div class="field-body">
