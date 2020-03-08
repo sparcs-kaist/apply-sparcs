@@ -1,0 +1,57 @@
+{
+  "name": "sparcs-apply-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "litmify",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc && node dist",
+    "dev": "./node_modules/.bin/nodemon --watch src/ -e ts,tsx --exec \"eslint ./src/*.ts && ts-node -r tsconfig-paths/register ./src/index.ts\"",
+    "lint": "eslint ./src/*.ts"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint ./src/*.ts",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^8.0.8",
+    "koa-session": "^5.13.1",
+    "mongoose": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.8",
+    "@types/koa": "^2.11.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.4.0",
+    "@types/koa-session": "^5.10.2",
+    "@types/koa__cors": "^3.0.1",
+    "@types/mongoose": "^5.7.3",
+    "@types/node": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.7.5"
+  }
+}
