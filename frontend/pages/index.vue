@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-fullheight">
+  <section class="index hero is-fullheight">
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered is-vcentered">
@@ -55,6 +55,13 @@
     </div>
   </section>
 </template>
+
+<style scoped>
+.index,
+button {
+  font-family: 'NanumBarunRoboto', sans-serif;
+}
+</style>
 
 <script>
 export default {
