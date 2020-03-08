@@ -15,7 +15,6 @@ const checkAuthenticated = async (
 
     // Get user information by token
     const jwtValidateResult = jwt.validateJWT(token);
-    console.log(jwtValidateResult);
 
     // If there is no user
     if (!jwtValidateResult) {
