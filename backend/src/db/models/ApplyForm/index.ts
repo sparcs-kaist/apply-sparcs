@@ -13,8 +13,6 @@ export interface IApplyFormDocument extends mongoose.Document {
   motivation: string;
   meetup: boolean;
   activeForFour: boolean;
-
-  password: string;
 }
 
 export interface IApplyForm extends IApplyFormDocument {

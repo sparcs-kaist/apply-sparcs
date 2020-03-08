@@ -14,8 +14,6 @@ const ApplyForm = new Schema({
   motivation: { type: String },
   meetup: { type: Boolean, required: true },
   activeForFour: { type: Boolean, required: true },
-
-  password: { type: String, required: true },
 });
 
 export default ApplyForm;
