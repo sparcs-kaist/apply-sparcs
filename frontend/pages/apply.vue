@@ -2,6 +2,7 @@
   <section class="apply hero is-fullheight">
     <div class="hero-body">
       <div class="container">
+        <nuxt-link to="/"> 뒤로 가기 </nuxt-link>
         <div class="columns is-centered is-vcentered">
           <form ref="form" class="column is-half" @submit.prevent="submitForm">
             <h2 v-if="!submitted" class="subtitle is-4">지원서 작성</h2>
@@ -293,7 +294,9 @@ export default {
 
   methods: {
     async submitForm(event) {
+      if (this.failed) this.sending = false;
       if (this.sending) return;
+
       this.sending = true;
       this.failed = false;
 
