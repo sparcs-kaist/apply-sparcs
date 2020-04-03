@@ -17,8 +17,13 @@
               알려드리겠습니다.
             </div>
             <div class="notification has-text-left">
-              [3/9 00:00] 2020 봄학기 SPARCS 리크루팅 지원서 작성이
-              시작되었습니다.
+              <template v-if="!overdue">
+                {{ dueText }}에 2020 봄학기 SPARCS 리크루팅 지원서 작성이
+                마감됩니다.
+              </template>
+              <template v-else>
+                2020 봄학기 SPARCS 리크루팅 지원서 작성이 마감되었습니다.
+              </template>
             </div>
             <hr />
             <button
@@ -39,7 +44,12 @@
                 style="background-color: rgb(235, 161, 42); color: white;"
                 @click="login"
               >
-                지원서 작성하기
+                <template v-if="overdue">
+                  지원서 확인하기
+                </template>
+                <template v-else>
+                  지원서 작성하기
+                </template>
               </button>
               <button class="button is-light" @click="logout">
                 로그아웃
@@ -65,6 +75,18 @@ button {
 
 <script>
 export default {
+  computed: {
+    overdue() {
+      return this.$store.getters.overdue;
+    },
+
+    dueText() {
+      return new Date(this.$store.state.due - 1000).toLocaleString('ko-KR', {
+        hour12: false
+      });
+    }
+  },
+
   methods: {
     login() {
       this.$axios

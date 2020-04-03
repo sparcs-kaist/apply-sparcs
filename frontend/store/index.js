@@ -1,12 +1,24 @@
 import cookie from 'cookie';
 
 export const state = () => ({
-  user: null
+  user: null,
+  due: 1585926000000, // 2020-04-04 00:00:00 UTC+09
+  time: Date.now()
 });
 
 export const mutations = {
   setUser(state, user) {
     state.user = user;
+  },
+
+  updateTime(state) {
+    state.time = Date.now();
+  }
+};
+
+export const getters = {
+  overdue(state) {
+    return state.time >= state.due;
   }
 };
 

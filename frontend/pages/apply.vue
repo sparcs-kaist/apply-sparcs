@@ -80,6 +80,7 @@
                     name="dept"
                     type="text"
                     placeholder="학과를 입력해주세요"
+                    :readonly="overdue"
                   />
                 </div>
               </div>
@@ -98,6 +99,7 @@
                 name="phone"
                 type="tel"
                 placeholder="전화번호를 입력해주세요."
+                :readonly="overdue"
               />
             </div>
 
@@ -106,12 +108,22 @@
                 지원 분야를 선택해주세요.
               </p>
               <div class="control">
-                <label class="radio">
-                  <input type="radio" name="applyType" value="developer" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="applyType"
+                    value="developer"
+                    :disabled="overdue"
+                  />
                   개발자
                 </label>
-                <label class="radio">
-                  <input type="radio" name="applyType" value="designer" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="applyType"
+                    value="designer"
+                    :disabled="overdue"
+                  />
                   디자이너
                 </label>
               </div>
@@ -128,6 +140,7 @@
                   class="textarea"
                   name="introduction"
                   placeholder="여기에 입력해주세요"
+                  :readonly="overdue"
                 >
                 </textarea>
               </div>
@@ -142,6 +155,7 @@
                   class="textarea"
                   name="workToDo"
                   placeholder="여기에 입력해주세요"
+                  :readonly="overdue"
                 >
                 </textarea>
               </div>
@@ -157,6 +171,7 @@
                   class="textarea"
                   name="motivation"
                   placeholder="여기에 입력해주세요"
+                  :readonly="overdue"
                 >
                 </textarea>
               </div>
@@ -170,12 +185,22 @@
                 참여하실 수 있나요?
               </p>
               <div class="control">
-                <label class="radio">
-                  <input type="radio" name="meetup" value="true" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="meetup"
+                    value="true"
+                    :disabled="overdue"
+                  />
                   네, 참여할 수 있습니다.
                 </label>
-                <label class="radio">
-                  <input type="radio" name="meetup" value="false" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="meetup"
+                    value="false"
+                    :disabled="overdue"
+                  />
                   아니오, 참여할 수 없습니다.
                 </label>
               </div>
@@ -186,12 +211,22 @@
                 SPARCS에 들어오신 후 4학기 이상 활동 하실 수 있나요?
               </p>
               <div class="control">
-                <label class="radio">
-                  <input type="radio" name="activeForFour" value="true" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="activeForFour"
+                    value="true"
+                    :disabled="overdue"
+                  />
                   네, 활동할 수 있습니다.
                 </label>
-                <label class="radio">
-                  <input type="radio" name="activeForFour" value="false" />
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="activeForFour"
+                    value="false"
+                    :disabled="overdue"
+                  />
                   아니오, 활동할 수 없습니다.
                 </label>
               </div>
@@ -206,7 +241,7 @@
               예정입니다.
             </div>
 
-            <button class="button is-primary" type="submit">
+            <button v-if="!overdue" class="button is-primary" type="submit">
               <template v-if="submitted">
                 업데이트
               </template>
@@ -214,6 +249,16 @@
                 제출
               </template>
             </button>
+            <div v-else>
+              <template v-if="!submitted">
+                제출기한이 종료되었습니다.
+              </template>
+              <template v-else>
+                현재 제출된 상태이며, 제출기한이 종료되어 더 이상 업데이트는
+                불가능합니다. <br />
+                제출하신 지원서는 계속 확인하실 수 있습니다.
+              </template>
+            </div>
 
             <transition name="fade">
               <span
@@ -243,6 +288,10 @@ export default {
   },
 
   computed: {
+    time() {
+      return this.$store.state.time;
+    },
+
     name() {
       return this.$store.state.user.name;
     },
@@ -253,6 +302,10 @@ export default {
 
     email() {
       return this.$store.state.user.email;
+    },
+
+    overdue() {
+      return this.$store.getters.overdue;
     }
   },
 
@@ -295,6 +348,7 @@ export default {
   methods: {
     async submitForm(event) {
       if (this.failed) this.sending = false;
+      if (this.overdue) return;
       if (this.sending) return;
 
       this.sending = true;
@@ -411,16 +465,19 @@ input[type='tel']:focus {
   border-color: #2979ff;
 }
 
-input[readonly] {
+input[readonly],
+textarea[readonly] {
   cursor: not-allowed;
   background: #dadada;
 }
 
-input[readonly]:hover {
+input[readonly]:hover,
+textarea[readonly]:hover {
   background: #dadada;
 }
 
-input[readonly]:focus {
+input[readonly]:focus,
+textarea[readonly]:focus {
   border-color: transparent;
 }
 

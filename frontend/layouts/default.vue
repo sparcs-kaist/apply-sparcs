@@ -17,3 +17,19 @@ html {
   box-sizing: border-box;
 }
 </style>
+
+<script>
+export default {
+  mounted() {
+    this.intervalId = setInterval(() => {
+      this.$store.commit('updateTime');
+    }, 1000);
+  },
+
+  destroyed() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+};
+</script>
