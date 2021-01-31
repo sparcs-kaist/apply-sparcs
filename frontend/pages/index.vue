@@ -9,7 +9,7 @@
               alt="logo"
               style="width: 25%; height: 25%;"
             />
-            <h2 class="subtitle is-4">2020 봄학기 SPARCS 리크루팅</h2>
+            <h2 class="subtitle is-4">2021 봄학기 SPARCS 리크루팅</h2>
             <br />
             <div class="notification is-danger has-text-left">
               COVID-19 확산 상황에 따라 리크루팅 일정이 변동될 수 있습니다.
@@ -18,11 +18,11 @@
             </div>
             <div class="notification has-text-left">
               <template v-if="!overdue">
-                {{ dueText }}에 2020 봄학기 SPARCS 리크루팅 지원서 작성이
+                {{ dueText }}에 2021 봄학기 SPARCS 리크루팅 지원서 작성이
                 마감됩니다.
               </template>
               <template v-else>
-                2020 봄학기 SPARCS 리크루팅 지원서 작성이 마감되었습니다.
+                2021 봄학기 SPARCS 리크루팅 지원서 작성이 마감되었습니다.
               </template>
             </div>
             <hr />
