@@ -305,6 +305,8 @@
 </template>
 
 <script>
+const TEXT_LENGTH_THRESHOLD = 100;
+
 export default {
   middleware: 'authenticated',
   data() {
@@ -316,7 +318,6 @@ export default {
       introduction: '',
       workToDo: '',
       motivation: '',
-      TEXT_LENGTH_THRESHOLD: 100,
     };
   },
 
@@ -350,7 +351,7 @@ export default {
     },
 
     shouldWarnWordCount() {
-      const inShortRange = (v) => v > 0 && v < this.TEXT_LENGTH_THRESHOLD;
+      const inShortRange = (v) => v > 0 && v < TEXT_LENGTH_THRESHOLD;
       return {
         introduction: inShortRange(this.wordCount.introduction),
         workToDo: inShortRange(this.wordCount.workToDo),
