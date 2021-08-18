@@ -104,9 +104,7 @@
             </div>
 
             <div class="form-item">
-              <p class="form-desc">
-                지원 분야를 선택해주세요.
-              </p>
+              <p class="form-desc">지원 분야를 선택해주세요.</p>
               <div class="control">
                 <label class="radio" :disabled="overdue">
                   <input
@@ -131,12 +129,15 @@
 
             <hr />
 
+            <div class="form-footer-item" style="font-weight: bold">
+              모든 항목은 {{ TEXT_LENGTH_THRESHOLD }}자 이상 작성해주세요.
+            </div>
+
             <div class="form-item">
-              <p class="form-desc">
-                자기소개를 작성해주세요.
-              </p>
+              <p class="form-desc">자기소개를 작성해주세요.</p>
               <div class="control">
                 <textarea
+                  v-model="introduction"
                   class="textarea"
                   name="introduction"
                   placeholder="여기에 입력해주세요"
@@ -144,6 +145,14 @@
                 >
                 </textarea>
               </div>
+              <span class="word-count"
+                >{{ wordCount.introduction }}자 작성
+                <span
+                  v-if="shouldWarnWordCount.introduction"
+                  class="length-warning"
+                  >(미달)</span
+                >
+              </span>
             </div>
 
             <div class="form-item">
@@ -152,6 +161,7 @@
               </p>
               <div class="control">
                 <textarea
+                  v-model="workToDo"
                   class="textarea"
                   name="workToDo"
                   placeholder="여기에 입력해주세요"
@@ -159,6 +169,12 @@
                 >
                 </textarea>
               </div>
+              <span class="word-count"
+                >{{ wordCount.workToDo }}자 작성
+                <span v-if="shouldWarnWordCount.workToDo" class="length-warning"
+                  >(미달)</span
+                >
+              </span>
             </div>
 
             <div class="form-item">
@@ -168,6 +184,7 @@
               </p>
               <div class="control">
                 <textarea
+                  v-model="motivation"
                   class="textarea"
                   name="motivation"
                   placeholder="여기에 입력해주세요"
@@ -175,14 +192,22 @@
                 >
                 </textarea>
               </div>
+              <span class="word-count"
+                >{{ wordCount.motivation }}자 작성
+                <span
+                  v-if="shouldWarnWordCount.motivation"
+                  class="length-warning"
+                  >(미달)</span
+                >
+              </span>
             </div>
 
             <hr />
 
             <div class="form-item">
               <p class="form-desc">
-                (교양분관 이용이 가능하다면) SPARCS는 매주 월요일 오후 9시에 동아리방에서 정모를 진행합니다.
-                참여하실 수 있나요?
+                (교양분관 이용이 가능하다면) SPARCS는 매주 월요일 오후 9시에
+                동아리방에서 정모를 진행합니다. 참여하실 수 있나요?
               </p>
               <div class="control">
                 <label class="radio" :disabled="overdue">
@@ -234,20 +259,23 @@
 
             <hr />
 
-            <div class="form-item">
+            <div class="form-footer-item">
               면접 일정은 개별적으로 안내드립니다.
               <br />
               현재는 9/4(토) ~ 9/5(일) 오후 7시 ~ 오후 11시 사이에 진행할
               예정입니다.
             </div>
 
+            <div v-if="wordsAreShort" class="form-footer-item">
+              <span class="length-warning"
+                >글자수 조건이 충족되지 못했습니다. 현재 상태로 최종
+                제출하신다면 자동으로 탈락됩니다. </span
+              >(저장은 가능합니다)
+            </div>
+
             <button v-if="!overdue" class="button is-primary" type="submit">
-              <template v-if="submitted">
-                업데이트
-              </template>
-              <template v-else>
-                제출
-              </template>
+              <template v-if="submitted"> 업데이트 </template>
+              <template v-else> 제출 </template>
             </button>
             <div v-else>
               <template v-if="!submitted">
@@ -278,12 +306,17 @@
 
 <script>
 export default {
+  middleware: 'authenticated',
   data() {
     return {
       status: '',
       failed: false,
       sending: false,
-      submitted: false
+      submitted: false,
+      introduction: '',
+      workToDo: '',
+      motivation: '',
+      TEXT_LENGTH_THRESHOLD: 100,
     };
   },
 
@@ -306,19 +339,44 @@ export default {
 
     overdue() {
       return this.$store.getters.overdue;
-    }
+    },
+
+    wordCount() {
+      return {
+        introduction: this.introduction.trim().length,
+        workToDo: this.workToDo.trim().length,
+        motivation: this.motivation.trim().length,
+      };
+    },
+
+    shouldWarnWordCount() {
+      const inShortRange = (v) => v > 0 && v < this.TEXT_LENGTH_THRESHOLD;
+      return {
+        introduction: inShortRange(this.wordCount.introduction),
+        workToDo: inShortRange(this.wordCount.workToDo),
+        motivation: inShortRange(this.wordCount.motivation),
+      };
+    },
+
+    wordsAreShort() {
+      return (
+        this.shouldWarnWordCount.introduction ||
+        this.shouldWarnWordCount.workToDo ||
+        this.shouldWarnWordCount.motivation
+      );
+    },
   },
 
   async mounted() {
     const res = await this.$axios.$get('/apply', {
       headers: {
-        Authorization: this.$store.state.user.token
+        Authorization: this.$store.state.user.token,
       },
 
       params: {
         stdNo: this.stdNo,
-        email: this.email
-      }
+        email: this.email,
+      },
     });
 
     if (!res.result) return;
@@ -341,9 +399,11 @@ export default {
 
       elem.value = value;
     });
-  },
 
-  middleware: 'authenticated',
+    this.introduction = res.payload.introduction;
+    this.workToDo = res.payload.workToDo;
+    this.motivation = res.payload.motivation;
+  },
 
   methods: {
     async submitForm(event) {
@@ -374,14 +434,14 @@ export default {
       if (!this.submitted) {
         result = await this.$axios.$post('/apply', jsonData, {
           headers: {
-            Authorization: this.$store.state.user.token
-          }
+            Authorization: this.$store.state.user.token,
+          },
         });
       } else {
         result = await this.$axios.$put('/apply', jsonData, {
           headers: {
-            Authorization: this.$store.state.user.token
-          }
+            Authorization: this.$store.state.user.token,
+          },
         });
       }
 
@@ -396,8 +456,8 @@ export default {
       setTimeout(() => {
         this.sending = false;
       }, 3000);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -406,8 +466,14 @@ export default {
   margin-bottom: 2rem;
 }
 
+.form-footer-item {
+  margin-bottom: 1rem;
+  word-break: keep-all;
+}
+
 .form-desc {
   margin-bottom: 10px;
+  word-break: keep-all;
 }
 
 .apply,
@@ -481,6 +547,11 @@ textarea[readonly]:focus {
   border-color: transparent;
 }
 
+span.word-count {
+  width: 100%;
+  text-align: end;
+}
+
 .button.is-primary {
   background: #2979ff;
   transition: background 0.4s ease;
@@ -504,8 +575,10 @@ textarea[readonly]:focus {
   color: #2979ff;
 }
 
-.status.is-failed {
+.status.is-failed,
+.length-warning {
   color: #f44336;
+  word-break: keep-all;
 }
 
 ::selection {
