@@ -7,7 +7,7 @@
             <img
               src="~assets/logo.png"
               alt="logo"
-              style="width: 25%; height: 25%;"
+              style="width: 25%; height: 25%"
             />
             <h2 class="subtitle is-4">2021 가을학기 SPARCS 리크루팅</h2>
             <br />
@@ -29,31 +29,25 @@
             <button
               v-if="!this.$store.state.user"
               class="button is-light"
-              style="background-color: rgb(235, 161, 42); color: white;"
+              style="background-color: rgb(235, 161, 42); color: white"
               @click="login"
             >
               SPARCSSSO로 로그인
             </button>
             <div v-if="this.$store.state.user">
-              <h1 style="margin-bottom: 1rem;">
+              <h1 style="margin-bottom: 1rem">
                 SPARCSSSO로 로그인 되었습니다. (현재 사용자:
                 {{ this.$store.state.user.name }})
               </h1>
               <button
                 class="button is-light"
-                style="background-color: rgb(235, 161, 42); color: white;"
+                style="background-color: rgb(235, 161, 42); color: white"
                 @click="login"
               >
-                <template v-if="overdue">
-                  지원서 확인하기
-                </template>
-                <template v-else>
-                  지원서 작성하기
-                </template>
+                <template v-if="overdue"> 지원서 확인하기 </template>
+                <template v-else> 지원서 작성하기 </template>
               </button>
-              <button class="button is-light" @click="logout">
-                로그아웃
-              </button>
+              <button class="button is-light" @click="logout">로그아웃</button>
             </div>
             <hr />
             <a class="button is-light" href="https://sparcs.org">
@@ -82,9 +76,9 @@ export default {
 
     dueText() {
       return new Date(this.$store.state.due - 1000).toLocaleString('ko-KR', {
-        hour12: false
+        hour12: false,
       });
-    }
+    },
   },
 
   methods: {
@@ -100,7 +94,7 @@ export default {
     },
     logout() {
       this.$store.dispatch('logout');
-    }
-  }
+    },
+  },
 };
 </script>

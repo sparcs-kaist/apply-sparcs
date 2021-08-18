@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import lengthOkay from 'src/utils/length';
 const { Schema } = mongoose;
 
 const ApplyForm = new Schema({
@@ -14,6 +15,18 @@ const ApplyForm = new Schema({
   motivation: { type: String },
   meetup: { type: Boolean, required: true },
   activeForFour: { type: Boolean, required: true },
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
+});
+
+// eslint-disable-next-line func-names
+ApplyForm.virtual('lengthOkay').get(function() {
+  return lengthOkay(this.workToDo) && lengthOkay(this.introduction) && lengthOkay(this.motivation);
 });
 
 export default ApplyForm;
