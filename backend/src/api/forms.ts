@@ -14,6 +14,6 @@ const getAllApplies = async (ctx: any): Promise<void> => {
     return ctxReturn(ctx, false, null, 'bad request', 400);
 };
 
-forms.get('/', getAllApplies);
+forms.post('/', getAllApplies);
 
 export default forms;

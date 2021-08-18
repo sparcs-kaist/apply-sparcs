@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import lengthOkay from 'src/utils/length';
+import lengthOkay from '../../../utils/length';
 const { Schema } = mongoose;
 
 const ApplyForm = new Schema({
