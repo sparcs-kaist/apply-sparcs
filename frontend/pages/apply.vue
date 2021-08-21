@@ -305,8 +305,6 @@
 </template>
 
 <script>
-const TEXT_LENGTH_THRESHOLD = 100;
-
 export default {
   middleware: 'authenticated',
   data() {
@@ -318,30 +316,25 @@ export default {
       introduction: '',
       workToDo: '',
       motivation: '',
+      TEXT_LENGTH_THRESHOLD: 100,
     };
   },
-
   computed: {
     time() {
       return this.$store.state.time;
     },
-
     name() {
       return this.$store.state.user.name;
     },
-
     stdNo() {
       return this.$store.state.user.stdNo;
     },
-
     email() {
       return this.$store.state.user.email;
     },
-
     overdue() {
       return this.$store.getters.overdue;
     },
-
     wordCount() {
       return {
         introduction: this.introduction.trim().length,
@@ -349,16 +342,14 @@ export default {
         motivation: this.motivation.trim().length,
       };
     },
-
     shouldWarnWordCount() {
-      const inShortRange = (v) => v > 0 && v < TEXT_LENGTH_THRESHOLD;
+      const inShortRange = (v) => v > 0 && v < this.TEXT_LENGTH_THRESHOLD;
       return {
         introduction: inShortRange(this.wordCount.introduction),
         workToDo: inShortRange(this.wordCount.workToDo),
         motivation: inShortRange(this.wordCount.motivation),
       };
     },
-
     wordsAreShort() {
       return (
         this.shouldWarnWordCount.introduction ||
@@ -367,54 +358,42 @@ export default {
       );
     },
   },
-
   async mounted() {
     const res = await this.$axios.$get('/apply', {
       headers: {
         Authorization: this.$store.state.user.token,
       },
-
       params: {
         stdNo: this.stdNo,
         email: this.email,
       },
     });
-
     if (!res.result) return;
-
     this.submitted = true;
     Object.keys(res.payload).forEach((name) => {
       const value = res.payload[name];
-
       const elem = this.$refs.form.querySelector(`[name="${name}"]`);
       if (!elem) return;
-
       if (elem.getAttribute('type') === 'radio') {
         const matchingElem = this.$refs.form.querySelector(
           `[name="${name}"][value="${value}"]`
         );
-
         if (matchingElem) matchingElem.checked = true;
         return;
       }
-
       elem.value = value;
     });
-
     this.introduction = res.payload.introduction;
     this.workToDo = res.payload.workToDo;
     this.motivation = res.payload.motivation;
   },
-
   methods: {
     async submitForm(event) {
       if (this.failed) this.sending = false;
       if (this.overdue) return;
       if (this.sending) return;
-
       this.sending = true;
       this.failed = false;
-
       const formElements = event.target.elements;
       const formData = new FormData(event.target);
       const jsonData = Object.create(null);
@@ -428,9 +407,7 @@ export default {
           jsonData[key] = value;
         }
       }
-
       this.status = '제출 중...';
-
       let result;
       if (!this.submitted) {
         result = await this.$axios.$post('/apply', jsonData, {
@@ -445,13 +422,11 @@ export default {
           },
         });
       }
-
       if (!result.result) {
         this.status = `제출 실패! (${result.message})`;
         this.failed = true;
         return;
       }
-
       this.status = '제출 완료';
       this.submitted = true;
       setTimeout(() => {
@@ -466,34 +441,28 @@ export default {
 .form-item {
   margin-bottom: 2rem;
 }
-
 .form-footer-item {
   margin-bottom: 1rem;
   word-break: keep-all;
 }
-
 .form-desc {
   margin-bottom: 10px;
   word-break: keep-all;
 }
-
 .apply,
 input,
 button,
 textarea {
   font-family: 'NanumBarunRoboto', sans-serif;
 }
-
 .radio:hover input[type='radio'] {
   background: #dadada;
   border-color: #dadada;
 }
-
 .radio:hover input[type='radio']:checked {
   background: #2979ff;
   border-color: #f1f2f3;
 }
-
 input[type='radio'] {
   appearance: none;
   width: 15px;
@@ -505,12 +474,10 @@ input[type='radio'] {
   outline: none;
   transition: background 0.4s ease, border-color 0.4s ease;
 }
-
 input[type='radio']:checked {
   background: #2979ff;
   border-color: #f1f2f3;
 }
-
 textarea,
 input[type='text'],
 input[type='tel'] {
@@ -518,70 +485,57 @@ input[type='tel'] {
   border: 1px solid transparent;
   transition: background 0.4s ease, border-color 0.4s ease;
 }
-
 textarea:hover,
 input[type='text']:hover,
 input[type='tel']:hover {
   background: #f6f6f6;
 }
-
 textarea:focus,
 input[type='text']:focus,
 input[type='tel']:focus {
   box-shadow: none;
   border-color: #2979ff;
 }
-
 input[readonly],
 textarea[readonly] {
   cursor: not-allowed;
   background: #dadada;
 }
-
 input[readonly]:hover,
 textarea[readonly]:hover {
   background: #dadada;
 }
-
 input[readonly]:focus,
 textarea[readonly]:focus {
   border-color: transparent;
 }
-
 span.word-count {
   width: 100%;
   text-align: end;
 }
-
 .button.is-primary {
   background: #2979ff;
   transition: background 0.4s ease;
 }
-
 .button.is-primary:hover {
   background: #2196f3;
 }
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
-
 .status {
   color: #2979ff;
 }
-
 .status.is-failed,
 .length-warning {
   color: #f44336;
   word-break: keep-all;
 }
-
 ::selection {
   background: rgba(168, 201, 255, 0.65);
 }
