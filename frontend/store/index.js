@@ -2,7 +2,7 @@ import cookie from 'cookie';
 
 export const state = () => ({
   user: null,
-  due: 1630681199000, // 2021-09-03 00:00:00 UTC+09
+  due: 1646208000000, // 2022-03-02 17:00:00 UTC+09
   time: Date.now()
 });
 
