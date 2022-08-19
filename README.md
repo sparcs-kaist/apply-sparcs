@@ -56,10 +56,6 @@ cd ../..
 
 ### mongoDB 실행하기
 
-screen -S mongo
-cd / && sudo mkdir data && cd data && sudo mkdir db
-ctrl A + D
-
 ### 3. pm2
 
 `src`와 같은 디렉토리에 아래와 같이 `ecosystem.config.js`를 생성합니다.
@@ -77,7 +73,7 @@ module.exports = {
       PORT: "5000",
       JWT_SECRET_KEY: "a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d",
       MONGO_URI: "mongodb://127.0.0.1:27017/apply",
-      DB_PASSWORD: ""
+      DB_PASSWORD: "",
       SSO_CLIENT_ID: "apply-sparcs",
       SSO_SECRET_KEY: ""
     }

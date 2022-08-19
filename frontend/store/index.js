@@ -2,7 +2,7 @@ import cookie from 'cookie';
 
 export const state = () => ({
   user: null,
-  due: 1661932800000, // 2022-03-02 17:00:00 UTC+09
+  due: 1661932800000, // 2022년 8월 31일 수요일 오후 5:00:00 GMT+09:00
   time: Date.now()
 });
 
