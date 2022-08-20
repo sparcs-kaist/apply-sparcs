@@ -56,6 +56,13 @@ cd ../..
 
 ### mongoDB 실행하기
 
+```sh
+sudo systemctl start mongod
+mongo
+> use apply
+> exit
+```
+
 ### 3. pm2
 
 `src`와 같은 디렉토리에 아래와 같이 `ecosystem.config.js`를 생성합니다.
@@ -63,29 +70,32 @@ DB_PASSWORD는 임원진 노션에 있습니다.
 
 ```js
 module.exports = {
-  apps : [{
-    name: "backend",
-    script: "npm",
-    args: "run start",
-    cwd: "/home/ubuntu/src/backend",
-    env: {
-      HOST_DOMAIN: "apply.sparcs.org",
-      PORT: "5000",
-      JWT_SECRET_KEY: "a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d",
-      MONGO_URI: "mongodb://127.0.0.1:27017/apply",
-      DB_PASSWORD: "",
-      SSO_CLIENT_ID: "apply-sparcs",
-      SSO_SECRET_KEY: ""
-    }
-  }, {
-    name: "frontend",
-    script: "npm",
-    args: "run start",
-    cwd: "/home/ubuntu/src/frontend",
-    env: {
-      NODE_ENV: "production"
-    }
-  }]
+  apps: [
+    {
+      name: "backend",
+      script: "npm",
+      args: "run start",
+      cwd: "/home/ubuntu/src/backend",
+      env: {
+        HOST_DOMAIN: "apply.sparcs.org",
+        PORT: "5000",
+        JWT_SECRET_KEY: "a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d",
+        MONGO_URI: "mongodb://127.0.0.1:27017/apply",
+        DB_PASSWORD: "",
+        SSO_CLIENT_ID: "apply-sparcs",
+        SSO_SECRET_KEY: "",
+      },
+    },
+    {
+      name: "frontend",
+      script: "npm",
+      args: "run start",
+      cwd: "/home/ubuntu/src/frontend",
+      env: {
+        NODE_ENV: "production",
+      },
+    },
+  ],
 };
 ```
 
@@ -165,23 +175,54 @@ function load() {
   const sheets = ss.getSheets();
   const sheet = ss.getActiveSheet();
 
-  const url = 'https://apply.sparcs.org/api/forms' // POST URL
+  const url = "https://apply.sparcs.org/api/forms"; // POST URL
   var data = {
-    'password': ''
+    password: "",
   };
   var options = {
-    'method' : 'post',
-    'payload' : data
+    method: "post",
+    payload: data,
   };
   const response = UrlFetchApp.fetch(url, options);
   const dataAll = JSON.parse(response.getContentText());
-  const data2D = (dataAll.payload.map(i => [i.name, i.stdNo, i.email, i.dept, i.phone, i.applyType, i.introduction, i.workToDo, i.motivation, i.meetup, i.activeForFour, i.lengthOkay]))
+  const data2D = dataAll.payload.map((i) => [
+    i.name,
+    i.stdNo,
+    i.email,
+    i.dept,
+    i.phone,
+    i.applyType,
+    i.introduction,
+    i.workToDo,
+    i.motivation,
+    i.meetup,
+    i.activeForFour,
+    i.lengthOkay,
+  ]);
 
-  sheet.getRange('A1:Z200').clearContent();
-  const columns = ["name", "stdNo", "email", "dept", "phone", "applyType", "introduction", "workToDo", "motivation", "meetup", "activeForFour", "lengthOkay"]
-  sheet.getRange('A1').setValue('"몇 초 전에 마지막으로 수정했습니다." 라는 문구가 뜰 때까지 잠시 기다려주세요');
-  sheet.getRange(2, 1, 1, columns.length).setValues([columns])
-  if(data2D.length) sheet.getRange(3, 1, data2D.length, data2D[0].length).setValues(data2D)
+  sheet.getRange("A1:Z200").clearContent();
+  const columns = [
+    "name",
+    "stdNo",
+    "email",
+    "dept",
+    "phone",
+    "applyType",
+    "introduction",
+    "workToDo",
+    "motivation",
+    "meetup",
+    "activeForFour",
+    "lengthOkay",
+  ];
+  sheet
+    .getRange("A1")
+    .setValue(
+      '"몇 초 전에 마지막으로 수정했습니다." 라는 문구가 뜰 때까지 잠시 기다려주세요'
+    );
+  sheet.getRange(2, 1, 1, columns.length).setValues([columns]);
+  if (data2D.length)
+    sheet.getRange(3, 1, data2D.length, data2D[0].length).setValues(data2D);
 }
 ```
 
