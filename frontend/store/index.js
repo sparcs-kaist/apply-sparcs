@@ -2,7 +2,7 @@ import cookie from 'cookie';
 
 export const state = () => ({
   user: null,
-  due: 1661932800000, // 2022년 8월 31일 수요일 오후 5:00:00 GMT+09:00
+  due: 1677596399000, // Tue Feb 28 2023 23:59:59 GMT+0900 (한국 표준시) Reference: https://www.unixtimestamp.com/
   time: Date.now()
 });
 
