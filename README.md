@@ -14,7 +14,7 @@ Used at [apply.sparcs.org](https://apply.sparcs.org) during our recruiting seaso
 
 ### frontend/pages/index.vue
 
-- `2023 봄학기` 3군데 변경
+- `2023년도 가을학기` 3군데 변경
 - 특별한 안내사항(COVID-19) 등이 있을 경우 변경
 
 ### frontend/pages/apply.vue
