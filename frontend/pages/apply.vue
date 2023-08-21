@@ -124,6 +124,15 @@
                   />
                   디자이너
                 </label>
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="applyType"
+                    value="planner"
+                    :disabled="overdue"
+                  />
+                  기획자
+                </label>
               </div>
             </div>
 
@@ -179,7 +188,7 @@
 
             <div class="form-item">
               <p class="form-desc">
-                개발 및 디자인과 관련된 경험이나 관심을 갖게 된 계기가 있다면
+                개발, 디자인, 기획 또는 행사 진행과 관련된 경험이나 관심을 갖게 된 계기가 있다면
                 자유롭게 작성해주세요.
               </p>
               <div class="control">
