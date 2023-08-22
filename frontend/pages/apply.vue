@@ -271,7 +271,7 @@
             <div class="form-footer-item">
               면접 일정은 개별적으로 안내드립니다.
               <br />
-              현재는 8월 31일(목) ~ 9월 2일(토) 사이에 진행할 예정입니다.
+              현재는 8월 31일(목) ~ 9월 3일(일) 사이에 진행할 예정입니다.
             </div>
 
             <div v-if="wordsAreShort" class="form-footer-item">
