@@ -14,7 +14,7 @@
             <div class="notification is-danger has-text-left">
               내부 상황에 따라 리크루팅 일정이 변동될 수 있습니다.
               <br />변동 시 SPARCS 공식 홈페이지 및 페이스북, 인스타그램을 통해
-              알려드리겠습니다.
+              알려드리겠습니다. 
               <br />2024년 2월 26일 오후 7시 ~ 오후 8시 30분과 2024년 2월 27일 오후 7시 ~ 오후 9시에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
             </div>
             <div class="notification has-text-left">
