@@ -12,6 +12,8 @@
                 지원서가 성공적으로 제출되었습니다.
                 <br />
                 지원서 접수 기간이 끝날 때까지는 자유롭게 수정하실 수 있습니다.
+                <br />
+                접수 기간 후에는 수정이 불가능하나, 제출하신 지원서를 확인하실 수 있습니다.
               </div>
             </template>
             <hr />
@@ -143,7 +145,7 @@
             </div>
 
             <div class="form-item">
-              <p class="form-desc">자기소개를 작성해주세요.</p>
+              <p class="form-desc">자기소개를 작성해주세요.<br />보여주고 싶으신 포트폴리오가 있다면 링크를 포함하여 작성해 주세요. 디자이너 지원자의 경우 포트폴리오 제출이 강력히 권장됩니다. (구글 드라이브, 노션 등 자유)</p>
               <div class="control">
                 <textarea
                   v-model="introduction"
@@ -215,7 +217,7 @@
 
             <div class="form-item">
               <p class="form-desc">
-                (교양분관 이용이 가능하다면) SPARCS는 매주 월요일 오후 9시에
+                SPARCS는 매주 월요일 오후 9시에
                 동아리방에서 정모를 진행합니다. 참여하실 수 있나요?
               </p>
               <div class="control">
@@ -271,7 +273,7 @@
             <div class="form-footer-item">
               면접 일정은 개별적으로 안내드립니다.
               <br />
-              현재는 2월 29일(목) ~ 3월 2일(토) 사이에 진행할 예정입니다.
+              현재는 2월 29일(목) ~ 3월 3일(일) 사이에 진행할 예정입니다.
             </div>
 
             <div v-if="wordsAreShort" class="form-footer-item">
@@ -283,7 +285,7 @@
 
             <button v-if="!overdue" class="button is-primary" type="submit">
               <template v-if="submitted"> 업데이트 </template>
-              <template v-else> 제출 </template>
+              <template v-else> 제출 (저장) </template>
             </button>
             <div v-else>
               <template v-if="!submitted">
