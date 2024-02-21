@@ -9,7 +9,7 @@
               alt="logo"
               style="width: 25%; height: 25%"
             />
-            <h2 class="subtitle is-4">2024년도 가을학기 SPARCS 리크루팅</h2>
+            <h2 class="subtitle is-4">2024년도 봄학기 SPARCS 리크루팅</h2>
             <br />
             <div class="notification is-danger has-text-left">
               내부 상황에 따라 리크루팅 일정이 변동될 수 있습니다.
