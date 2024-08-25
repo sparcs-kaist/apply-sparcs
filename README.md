@@ -14,12 +14,13 @@ Used at [apply.sparcs.org](https://apply.sparcs.org) during our recruiting seaso
 
 ### frontend/pages/index.vue
 
-- `2023년도 가을학기` 3군데 변경
+- `2024년도 가을학기` 3군데 변경
 - 특별한 안내사항(COVID-19) 등이 있을 경우 변경
 
 ### frontend/pages/apply.vue
 
 면접 일정 변경
+면접 가능 일정 수합을 위한 링크 변경
 
 ### frontend/store/index.js
 
@@ -72,27 +73,27 @@ DB_PASSWORD는 임원진 노션에 있습니다.
 module.exports = {
   apps: [
     {
-      name: "backend",
-      script: "npm",
-      args: "run start",
-      cwd: "/home/ubuntu/src/backend",
+      name: 'backend',
+      script: 'npm',
+      args: 'run start',
+      cwd: '/home/ubuntu/src/backend',
       env: {
-        HOST_DOMAIN: "apply.sparcs.org",
-        PORT: "5000",
-        JWT_SECRET_KEY: "a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d",
-        MONGO_URI: "mongodb://127.0.0.1:27017/apply",
-        DB_PASSWORD: "",
-        SSO_CLIENT_ID: "apply-sparcs",
-        SSO_SECRET_KEY: "",
+        HOST_DOMAIN: 'apply.sparcs.org',
+        PORT: '5000',
+        JWT_SECRET_KEY: 'a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d',
+        MONGO_URI: 'mongodb://127.0.0.1:27017/apply',
+        DB_PASSWORD: '',
+        SSO_CLIENT_ID: 'apply-sparcs',
+        SSO_SECRET_KEY: '',
       },
     },
     {
-      name: "frontend",
-      script: "npm",
-      args: "run start",
-      cwd: "/home/ubuntu/src/frontend",
+      name: 'frontend',
+      script: 'npm',
+      args: 'run start',
+      cwd: '/home/ubuntu/src/frontend',
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: 'production',
       },
     },
   ],
@@ -175,12 +176,12 @@ function load() {
   const sheets = ss.getSheets();
   const sheet = ss.getActiveSheet();
 
-  const url = "https://apply.sparcs.org/api/forms"; // POST URL
+  const url = 'https://apply.sparcs.org/api/forms'; // POST URL
   var data = {
-    password: "",
+    password: '',
   };
   var options = {
-    method: "post",
+    method: 'post',
     payload: data,
   };
   const response = UrlFetchApp.fetch(url, options);
@@ -197,26 +198,28 @@ function load() {
     i.motivation,
     i.meetup,
     i.activeForFour,
+    i.interviewSchedule,
     i.lengthOkay,
   ]);
 
-  sheet.getRange("A1:Z200").clearContent();
+  sheet.getRange('A1:Z200').clearContent();
   const columns = [
-    "name",
-    "stdNo",
-    "email",
-    "dept",
-    "phone",
-    "applyType",
-    "introduction",
-    "workToDo",
-    "motivation",
-    "meetup",
-    "activeForFour",
-    "lengthOkay",
+    'name',
+    'stdNo',
+    'email',
+    'dept',
+    'phone',
+    'applyType',
+    'introduction',
+    'workToDo',
+    'motivation',
+    'meetup',
+    'activeForFour',
+    'interviewSchedule',
+    'lengthOkay',
   ];
   sheet
-    .getRange("A1")
+    .getRange('A1')
     .setValue(
       '"몇 초 전에 마지막으로 수정했습니다." 라는 문구가 뜰 때까지 잠시 기다려주세요'
     );

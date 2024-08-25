@@ -20,6 +20,7 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation,
     meetup,
     activeForFour,
+    interviewSchedule,
   } = data;
 
   console.log(
@@ -29,14 +30,8 @@ const newApply = async (ctx: any): Promise<void> => {
   // Validate input
   const joiObject = joi.object({
     name: joi.string().required(),
-    stdNo: joi
-      .number()
-      .integer()
-      .required(),
-    email: joi
-      .string()
-      .email()
-      .required(),
+    stdNo: joi.number().integer().required(),
+    email: joi.string().email().required(),
     dept: joi.string().required(),
     phone: joi.string().required(),
     applyType: joi
@@ -49,6 +44,7 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation: joi.string(),
     meetup: joi.boolean().required(),
     activeForFour: joi.boolean().required(),
+    interviewSchedule: joi.boolean().required(),
   });
   const joiValidateResult = joiObject.validate(data);
   if (joiValidateResult.error) {
@@ -86,13 +82,14 @@ const newApply = async (ctx: any): Promise<void> => {
     motivation,
     meetup,
     activeForFour,
+    interviewSchedule,
   });
 
   const applyFormId = await ApplyForm.create(applyFormDocument)
-    .then(applyForm => {
+    .then((applyForm) => {
       return applyForm.id;
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       return ctxReturn(ctx, false, null, '', 500);
     });
@@ -148,6 +145,7 @@ const editApply = async (ctx: any): Promise<void> => {
     motivation,
     meetup,
     activeForFour,
+    interviewSchedule,
     password,
   } = data;
 
@@ -158,14 +156,8 @@ const editApply = async (ctx: any): Promise<void> => {
   // Validate input
   const joiObject = joi.object({
     name: joi.string().required(),
-    stdNo: joi
-      .number()
-      .integer()
-      .required(),
-    email: joi
-      .string()
-      .email()
-      .required(),
+    stdNo: joi.number().integer().required(),
+    email: joi.string().email().required(),
     dept: joi.string().required(),
     phone: joi.string().required(),
     applyType: joi
@@ -178,6 +170,7 @@ const editApply = async (ctx: any): Promise<void> => {
     motivation: joi.string(),
     meetup: joi.boolean().required(),
     activeForFour: joi.boolean().required(),
+    interviewSchedule: joi.boolean().required(),
   });
   const joiValidateResult = joiObject.validate(data);
   if (joiValidateResult.error) {
@@ -210,6 +203,7 @@ const editApply = async (ctx: any): Promise<void> => {
       motivation,
       meetup,
       activeForFour,
+      interviewSchedule,
     },
     { upsert: true, new: true },
   );

@@ -270,10 +270,36 @@
 
             <hr />
 
-            <div class="form-footer-item">
-              면접 일정은 개별적으로 안내드립니다.
-              <br />
-              현재는 2월 29일(목) ~ 3월 3일(일) 사이에 진행할 예정입니다.
+            <div class="form-item">
+              <p class="form-desc">
+                면접은 9월 5일부터 9월 8일 일요일 사이에 진행됩니다. (단 단체 사정에 따라 일요일에는 면접을 진행하지 않을 수 있습니다)
+                <br />
+                아래 링크에 방문하시어 대면 면접 참여가 가능하신 시간을 모두 입력해 주세요.
+                <br />
+                <a href="https://zcal.co/m/d0G5V7zu">면접 가능 시간 입력</a>
+                <br />
+                면접 가능 시간을 입력하셨나요?
+              </p>
+              <div class="control">
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="interviewSchedule"
+                    value="true"
+                    :disabled="overdue"
+                  />
+                  네, 입력했습니다.
+                </label>
+                <label class="radio" :disabled="overdue">
+                  <input
+                    type="radio"
+                    name="interviewSchedule"
+                    value="false"
+                    :disabled="overdue"
+                  />
+                  아니오, 입력하지 않았습니다.
+                </label>
+              </div>
             </div>
 
             <div v-if="wordsAreShort" class="form-footer-item">
@@ -326,7 +352,7 @@ export default {
       introduction: '',
       workToDo: '',
       motivation: '',
-      TEXT_LENGTH_THRESHOLD: 100,
+      TEXT_LENGTH_THRESHOLD: 300,
     };
   },
   computed: {
