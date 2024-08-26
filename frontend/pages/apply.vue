@@ -133,7 +133,7 @@
                     value="planner"
                     :disabled="overdue"
                   />
-                  기획자
+                  기획팀 팀원
                 </label>
               </div>
             </div>
