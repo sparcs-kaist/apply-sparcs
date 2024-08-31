@@ -12,12 +12,13 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/bulma": "^1.2.1",
     "@nuxtjs/dotenv": "^1.4.0",
     "cookie": "^0.4.0",
     "nuxt": "^2.15.8",
-    "@channel.io/channel-web-sdk-loader": "^2.0.0"
+    "vue-gtag": "^2.0.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.1",
