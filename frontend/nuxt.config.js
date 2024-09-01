@@ -50,15 +50,11 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/google-analytics',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  googleAnalytics: {
-    id: process.env.GA_ID,
-  },
   axios: {
     baseUrl: process.env.API_URL,
     credentials: true,
