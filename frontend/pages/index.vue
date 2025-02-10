@@ -9,22 +9,22 @@
               alt="logo"
               style="width: 25%; height: 25%"
             />
-            <h2 class="subtitle is-4">2024년도 가을학기 SPARCS 리크루팅</h2>
+            <h2 class="subtitle is-4">2025년도 봄학기 SPARCS 리크루팅</h2>
             <br />
             <div class="notification is-danger has-text-left">
               내부 상황에 따라 리크루팅 일정이 변동될 수 있습니다.
               <br />변동 시 SPARCS 공식 홈페이지 및 페이스북, 인스타그램을 통해
               알려드리겠습니다.
-              <br /><u>2024년 9월 2일 오후 7시 ~ 오후 8시 30분과 2024년 9월 3일 오후 7시 ~ 오후 9시</u>에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
+              <br /><u>2025년 2월 24일 오후 7시 ~ 오후 9시 00분과 2025년 2월 25일 오후 7시 ~ 오후 9시</u>에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
               <br /><a href="https://url.kr/n9xc8j">FAQ 바로가기</a>
             </div>
             <div class="notification has-text-left">
               <template v-if="!overdue">
-                {{ dueText }}에 2024년도 가을학기 SPARCS 리크루팅 지원서 작성이
+                {{ dueText }}에 2025년도 봄학기 SPARCS 리크루팅 지원서 작성이
                 마감됩니다.
               </template>
               <template v-else>
-                2024년도 가을학기 SPARCS 리크루팅 준비중입니다.
+                2025년도 봄학기 SPARCS 리크루팅 준비중입니다.
               </template>
             </div>
             <hr />
