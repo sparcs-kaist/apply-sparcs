@@ -276,7 +276,7 @@
                 <br />
                 아래 링크에 방문하시어 대면 면접 참여를 원하시는 시간을 선택해주세요.
                 <br />
-                <a href="https://calendly.com/casio-sparcs/2025-spring-recruit">면접 가능 시간 입력</a>
+                <a href="https://calendly.com/casio-sparcs/2025-spring-recruit" target="_blank">면접 가능 시간 입력</a>
                 <p class="comment">
                 <br />
                 *) 직군 별로 면접 가능 시간이 상이하니, 지원하고자 하는 직군의 면접 가능 시간을 반드시 확인 후 신청해주세요.
@@ -345,6 +345,7 @@
     </div>
   </section>
 </template>
+
 
 <script>
 export default {
