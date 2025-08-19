@@ -14,7 +14,7 @@ Used at [apply.sparcs.org](https://apply.sparcs.org) during our recruiting seaso
 
 ### frontend/pages/index.vue
 
-- `2024년도 가을학기` 3군데 변경
+- `2025년도 가을학기` 3군데 변경
 - 특별한 안내사항(COVID-19) 등이 있을 경우 변경
 
 ### frontend/pages/apply.vue
@@ -80,7 +80,7 @@ module.exports = {
       env: {
         HOST_DOMAIN: 'apply.sparcs.org',
         PORT: '5000',
-        JWT_SECRET_KEY: 'a290fe45af2e48beffdc06fd0450924ad380b8df04f5357d',
+        JWT_SECRET_KEY: '',
         MONGO_URI: 'mongodb://127.0.0.1:27017/apply',
         DB_PASSWORD: '',
         SSO_CLIENT_ID: 'apply-sparcs',
