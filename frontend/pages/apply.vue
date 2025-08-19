@@ -272,11 +272,11 @@
 
             <div class="form-item">
               <p class="form-desc">
-                면접은 2월 27일부터 3월 2일 사이에 진행됩니다. (단 단체 사정에 따라 일요일에는 면접을 진행하지 않을 수 있습니다)
+                면접은 9월 4일부터 9월 6일 사이에 진행됩니다. (단 단체 사정에 따라 일요일에는 면접을 진행하지 않을 수 있습니다)
                 <br />
                 아래 링크에 방문하시어 대면 면접 참여를 원하시는 시간을 선택해주세요.
                 <br />
-                <a href="https://calendly.com/casio-sparcs/2025-spring-recruit" target="_blank">면접 가능 시간 입력</a>
+                <a href="https://calendly.com/casio-sparcs/2025-fall-recruit" target="_blank">면접 가능 시간 입력</a>
                 <p class="comment">
                 <br />
                 *) 직군 별로 면접 가능 시간이 상이하니, 지원하고자 하는 직군의 면접 가능 시간을 반드시 확인 후 신청해주세요.
