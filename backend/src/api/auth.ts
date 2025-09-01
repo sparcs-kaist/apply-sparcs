@@ -34,27 +34,29 @@ const loginCallback = async (ctx: any): Promise<void> => {
 
   // Get user information from SSO
   const sparcsInfo = await SSOClient.getUserInfo(code);
+  console.log(`sparcsInfo: ${JSON.stringify(sparcsInfo)}`);
+
   const kaistInfo = JSON.parse(sparcsInfo.kaist_info);
+  const kaistInfoV2 = JSON.parse(sparcsInfo.kaist_v2_info);
+  const payload = {
+    email: kaistInfoV2.email || kaistInfo.mail,
+    stdNo: kaistInfoV2.std_no || kaistInfo.ku_std_no,
+    name: kaistInfoV2.user_nm || kaistInfo.ku_kname,
+  };
 
   ctx.cookies.set('SESSID', '', {
     maxAge: 1000 * 60 * 10,
     overwrite: true,
   });
 
-  const token = await generateJWT(
-    { email: kaistInfo.mail, stdNo: kaistInfo.ku_std_no, name: kaistInfo.ku_kname },
-    'user',
-  );
-
+  const token = await generateJWT(payload, 'user');
   return ctxReturn(
     ctx,
     true,
     {
+      ...payload,
       isStateValid: true,
       token,
-      name: kaistInfo.ku_kname,
-      stdNo: kaistInfo.ku_std_no,
-      email: kaistInfo.mail,
     },
     '',
     200,
