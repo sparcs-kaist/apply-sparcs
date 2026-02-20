@@ -30,6 +30,6 @@ export default {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
-  }
+  },
 };
 </script>

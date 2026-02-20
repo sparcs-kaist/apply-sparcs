@@ -18,7 +18,7 @@
 export default {
   data() {
     return {
-      code: ''
+      code: '',
     };
   },
 
@@ -27,7 +27,7 @@ export default {
 
     const res = await this.$axios.$post('auth/login/callback', {
       code,
-      state
+      state,
     });
 
     if (!res.result) {
@@ -38,6 +38,6 @@ export default {
     }
 
     this.code = code;
-  }
+  },
 };
 </script>

@@ -2,8 +2,9 @@ import cookie from 'cookie';
 
 export const state = () => ({
   user: null,
-  due: 1756911599 * 1000, // Wed Sep 03 2025 23:59:59 GMT+0900 (한국 표준시) Reference: https://www.unixtimestamp.com/
-  time: Date.now()
+  open: 1771772400 * 1000, // Mon Feb 23 2026 00:00:00 GMT+0900 (한국 표준시)
+  due: 1772722799 * 1000, // Thu Mar 05 2026 23:59:59 GMT+0900 (한국 표준시) Reference: https://www.unixtimestamp.com/
+  time: Date.now(),
 });
 
 export const mutations = {
@@ -13,13 +14,17 @@ export const mutations = {
 
   updateTime(state) {
     state.time = Date.now();
-  }
+  },
 };
 
 export const getters = {
+  beforeopen(state) {
+    return state.time < state.open;
+  },
+
   overdue(state) {
     return state.time >= state.due;
-  }
+  },
 };
 
 export const actions = {
@@ -31,8 +36,8 @@ export const actions = {
 
     const { result, payload } = await $axios.$get('/auth/check', {
       headers: {
-        Authorization: cookies.PHPSESSID
-      }
+        Authorization: cookies.PHPSESSID,
+      },
     });
 
     if (result) {
@@ -49,5 +54,5 @@ export const actions = {
   logout({ commit }, payload) {
     document.cookie = `PHPSESSID=; path=/`;
     commit('setUser', null);
-  }
+  },
 };
