@@ -306,7 +306,7 @@
               >(저장은 가능합니다)
             </div>
 
-            <button v-if="!overdue" class="button is-primary" type="submit">
+            <button v-if="!overdue" class="button is-primary" type="submit" :disabled="beforeopen">
               <template v-if="submitted"> 업데이트 </template>
               <template v-else> 제출 (저장) </template>
             </button>
@@ -368,6 +368,9 @@ export default {
     },
     overdue() {
       return this.$store.getters.overdue;
+    },
+    beforeopen() {
+      return this.$store.getters.beforeopen;
     },
     wordCount() {
       return {

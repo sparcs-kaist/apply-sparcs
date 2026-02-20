@@ -34,7 +34,7 @@ export default {
       this.$router.replace('/login/error');
     } else {
       this.$store.dispatch('login', res.payload);
-      this.$router.replace('/apply');
+      this.$router.replace(this.$store.getters.beforeopen ? '/' : '/apply');
     }
 
     this.code = code;
