@@ -261,7 +261,7 @@
 
             <hr />
 
-            <div class="form-item">
+            <!-- <div class="form-item">
               <p class="form-desc">
                 면접은 3월 6일부터 3월 8일 사이에 진행됩니다. (단 단체 사정에 따라 일요일에는 면접을 진행하지 않을 수 있습니다)
                 <br />
@@ -297,7 +297,7 @@
                   아니오, 입력하지 않았습니다.
                 </label>
               </div>
-            </div>
+            </div> -->
 
             <div v-if="wordsAreShort" class="form-footer-item">
               <span class="length-warning"
