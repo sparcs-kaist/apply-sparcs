@@ -159,7 +159,7 @@
 
             <div class="form-item">
               <p class="form-desc">
-                SPARCS에 들어온다면 어떤 일을 하고 싶으신가요?
+                SPARCS는 카이스트 총학생회 산하 특별기구로, 학내 구성원들을 위한 다양한 서비스를 개발하는 단체입니다. SPARCS에서 함께 만들고 싶은 학우 대상 서비스 아이디어나, 기존 서비스에서 개선하고 싶은 점이 있다면 자유롭게 제시해 주세요.
               </p>
               <div class="control">
                 <textarea
@@ -181,7 +181,7 @@
 
             <div class="form-item">
               <p class="form-desc">
-                개발, 디자인, 서비스 기획 및 운영과 관련된 경험이나 관심을 가지게 된 계기가 있다면 자유롭게 작성해주세요.
+                서비스 개발과 관련된 경험이나 관심을 가지게 된 계기가 있다면 자유롭게 작성해주세요.
                 (다른 사람들과 협업을 통해 서비스 제작 등의 프로젝트를 진행해 본 경험이 있다면, 해당 경험을 위주로 작성해주세요.)
               </p>
               <div class="control">
@@ -261,13 +261,13 @@
 
             <hr />
 
-            <!-- <div class="form-item">
+            <div class="form-item">
               <p class="form-desc">
                 면접은 3월 6일부터 3월 8일 사이에 진행됩니다. (단 단체 사정에 따라 일요일에는 면접을 진행하지 않을 수 있습니다)
                 <br />
                 아래 링크에 방문하시어 대면 면접 참여를 원하시는 시간을 선택해주세요.
                 <br />
-                <a href="https://calendly.com/casio-sparcs/2025-fall-recruit" target="_blank">면접 가능 시간 입력</a>
+                <a href="https://calendly.com/kwabang-sparcs/2026-spring-sparcs-recruit" target="_blank">면접 가능 시간 입력</a>
                 <p class="comment">
                 <br />
                 *) 직군 별로 면접 가능 시간이 상이하니, 지원하고자 하는 직군의 면접 가능 시간을 반드시 확인 후 신청해주세요.
@@ -297,7 +297,7 @@
                   아니오, 입력하지 않았습니다.
                 </label>
               </div>
-            </div> -->
+            </div>
 
             <div v-if="wordsAreShort" class="form-footer-item">
               <span class="length-warning"

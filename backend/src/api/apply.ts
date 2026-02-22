@@ -36,7 +36,7 @@ const newApply = async (ctx: any): Promise<void> => {
     phone: joi.string().required(),
     applyType: joi
       .string()
-      .valid('developer', 'designer', 'planner')
+      .valid('developer', 'designer')
       .required(),
 
     introduction: joi.string(),
@@ -162,7 +162,7 @@ const editApply = async (ctx: any): Promise<void> => {
     phone: joi.string().required(),
     applyType: joi
       .string()
-      .valid('developer', 'designer', 'planner')
+      .valid('developer', 'designer')
       .required(),
 
     introduction: joi.string(),

@@ -6,7 +6,7 @@ export interface IApplyFormDocument extends mongoose.Document {
   stdNo: number;
   dept: string;
   phone: string;
-  applyType: 'developer' | 'designer' | 'planner';
+  applyType: 'developer' | 'designer';
 
   introduction: string;
   workToDo: string;
