@@ -20,6 +20,6 @@ app.use(api.routes()).use(api.allowedMethods());
 console.log('Successfully set up koa.');
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is listening on PORT ${port}.`);
+app.listen({ port, host: "0.0.0.0" }, () => {
+    console.log(`Server is listening on PORT ${port}.`);
 });

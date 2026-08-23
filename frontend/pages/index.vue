@@ -9,38 +9,34 @@
               alt="logo"
               style="width: 25%; height: 25%"
             />
-            <h2 class="subtitle is-4">2026년도 봄학기 SPARCS 리크루팅</h2>
+            <h2 class="subtitle is-4">2026년도 가을학기 SPARCS 리크루팅</h2>
             <br />
             <div class="notification is-danger has-text-left">
               내부 상황에 따라 리크루팅 일정이 변동될 수 있습니다.
               <br />변동 시 SPARCS 공식 홈페이지 및 페이스북, 인스타그램을 통해
               알려드리겠습니다.
-              <br /><u>2026년 3월 3일 오후 7시 ~ 오후 9시와 2026년 3월 4일 오후 7시 ~ 오후 9시</u>에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
+              <br /><u>2026년 9월 1일 오후 7시 ~ 오후 9시와 2026년 9월 2일 오후 7시 ~ 오후 9시</u>에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
               <br /><a href="https://sparcs.notion.site/30ec25603b0b801c947cebb1120d576f?v=30ec25603b0b810fa50c000cbcd43fd5&pvs=73">FAQ 바로가기</a>
             </div>
             <div class="notification has-text-left">
               <template v-if="!beforeopen && !overdue">
-                {{ dueText }}에 2026년도 봄학기 SPARCS 리크루팅 지원서 작성이
+                {{ dueText }}에 2026년도 가을학기 SPARCS 리크루팅 지원서 작성이
                 마감됩니다.
               </template>
               <template v-else>
-                2026년도 봄학기 SPARCS 리크루팅 준비 중입니다.
+                2026년도 가을학기 SPARCS 리크루팅 준비 중입니다.
                 <table class="schedule-table">
                   <tr>
                     <td>지원서 접수</td>
-                    <td>2026년 2월 23일(월) ~ 2026년 3월 4일(수)</td>
+                    <td>2026년 8월 24일(월) ~ 2026년 9월 3일(목)</td>
                   </tr>
                   <tr>
                     <td>오픈동방</td>
-                    <td>2026년 3월 3일(화) ~ 2026년 3월 4일(수)</td>
+                    <td>2026년 9월 1일(화) ~ 2026년 9월 2일(수)</td>
                   </tr>
                   <tr>
                     <td>면접</td>
-                    <td>2026년 3월 6일(금) ~ 2026년 3월 8일(일)</td>
-                  </tr>
-                  <tr>
-                    <td>합격자 발표</td>
-                    <td>2026년 3월 8일(일) ~ 2026년 3월 9일(월)</td>
+                    <td>2026년 9월 4일(금) ~ 2026년 9월 6일(일)</td>
                   </tr>
                 </table>
               </template>
