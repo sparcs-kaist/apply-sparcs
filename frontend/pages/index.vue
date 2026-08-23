@@ -16,7 +16,7 @@
               <br />변동 시 SPARCS 공식 홈페이지 및 페이스북, 인스타그램을 통해
               알려드리겠습니다.
               <br /><u>2026년 9월 1일 오후 7시 ~ 오후 9시와 2026년 9월 2일 오후 7시 ~ 오후 9시</u>에 진행되는 오픈동방에 참여하시면 동방을 구경하면서 현역 회원과 이야기를 나눠보실 수 있습니다.
-              <br /><a href="https://sparcs.notion.site/30ec25603b0b801c947cebb1120d576f?v=30ec25603b0b810fa50c000cbcd43fd5&pvs=73">FAQ 바로가기</a>
+              <br /><a href="https://sparcs.notion.site/3c5c25603b0b80ef8616eaaee8a3a63a?v=7b9c25603b0b8341b9f4889dadd0d55f">FAQ 바로가기</a>
             </div>
             <div class="notification has-text-left">
               <template v-if="!beforeopen && !overdue">
